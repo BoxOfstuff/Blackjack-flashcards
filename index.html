@@ -12,7 +12,7 @@
             padding: 20px;
             background-color: #f5f5f5;
         }
-        #card {
+        #flashcard {
             font-size: 22px;
             padding: 20px;
             margin: 20px auto;
@@ -22,6 +22,11 @@
             border-radius: 12px;
             background-color: white;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            min-height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
         }
         .btn {
             display: block;
@@ -34,34 +39,43 @@
             cursor: pointer;
             border: none;
             border-radius: 5px;
-            background-color: #007BFF;
-            color: white;
         }
-        .btn:hover {
-            background-color: #0056b3;
-        }
+        .btn-action { background-color: #007BFF; color: white; }
+        .btn-action:hover { background-color: #0056b3; }
     </style>
 </head>
 <body>
 
     <h1>Blackjack Strategy Flashcards</h1>
     
-    <div id="card">Loading...</div>
-    <button class="btn" onclick="showAnswer()">Show Answer</button>
-    <button class="btn" onclick="nextCard()">Next Card</button>
+    <div id="flashcard">Loading...</div>
+    <button class="btn btn-action" onclick="showAnswer()">Show Answer</button>
+    <button class="btn btn-action" onclick="nextCard()">Next Card</button>
 
     <script>
         const flashcards = [
-            { question: "Always split ___ & ___", answer: "Aces & 8’s" },
-            { question: "Never split ___ and ___", answer: "10’s and 5’s" },
-            { question: "Split 2, 3 & 7 on ___ through ___", answer: "2 through 7" },
+            { question: "Always split ___ & ___", answer: "Aces & 8's" },
+            { question: "Never split ___ and ___", answer: "10's and 5's" },
+            { question: "Split 2,3 & 7 on ___ through ___", answer: "2 through 7" },
             { question: "Split 4’s against ___ & ___", answer: "5 & 6" },
-            { question: "Soft 21 and 20 always ___", answer: "stand" },
-            { question: "Soft 19 (A, 8) ___ against 6, otherwise it stands", answer: "doubles" },
-            { question: "Hard 11 will always ___", answer: "double down" },
-            { question: "Hard 16 should ___ against 9 – Ace", answer: "surrender" },
-            { question: "Hard 8 and below will always ___", answer: "hit" },
-            { question: "Hard 12 will stand against ___ - ___, hit against everything else", answer: "4-6" }
+            { question: "Split 6’s on ___ through ___", answer: "2 through 6" },
+            { question: "Split 9’s against ___ through ___, except ___", answer: "2 through 9, except 7" },
+            { question: "Soft 21 and 20 always ___", answer: "Stand" },
+            { question: "Soft 19 (A,8) ___ against 6, otherwise it stands", answer: "Doubles" },
+            { question: "Soft 18 (A,7) ___ against 2-6, ___ against 7 and 8, ___ against 9, 10, Ace.", 
+                answer: "Doubles | Stands | Hits" },
+            { question: "Soft 17 (A,6) ___ against 3-6, otherwise it ___", answer: "Doubles | Hits" },
+            { question: "Soft 16 and Soft 15 (A,5 and A,4) ___ against 4-6, otherwise it ___", answer: "Doubles | Hits" },
+            { question: "Soft 14 and Soft 13 (A,3 and A,2) ___ against 5 and 6, otherwise it ___", answer: "Doubles | Hits" },
+            { question: "Surrender 16 against ___ - ___", answer: "9 - Ace" },
+            { question: "Surrender 15 against a ___", answer: "10" },
+            { question: "Hard 17 and above will always ___", answer: "Stand" },
+            { question: "Hard 13 through 16 will ___ against 2-6, ___ against 7 - Ace", answer: "Stand | Hit" },
+            { question: "Hard 12 will stand against ___ - ___, hit against ___", answer: "4-6 | Everything Else" },
+            { question: "Hard 11 will always ___", answer: "Double Down" },
+            { question: "Hard 10 will ___ against ___ - ___", answer: "Double | 2-9" },
+            { question: "Hard 9 will ___ against ___ - ___", answer: "Double | 3-6" },
+            { question: "Hard 8 and below will always ___", answer: "Hit" }
         ];
 
         let currentCard;
@@ -69,14 +83,15 @@
         function nextCard() {
             let randomIndex = Math.floor(Math.random() * flashcards.length);
             currentCard = flashcards[randomIndex];
-            document.getElementById("card").innerText = currentCard.question;
+
+            document.getElementById("flashcard").innerText = currentCard.question;
         }
 
         function showAnswer() {
-            document.getElementById("card").innerText = currentCard.question + " → " + currentCard.answer;
+            document.getElementById("flashcard").innerText = currentCard.question + " → " + currentCard.answer;
         }
 
-        nextCard();
+        nextCard();  // Load the first card on page load
     </script>
 
 </body>
