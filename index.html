@@ -59,11 +59,10 @@
             { question: "Split 2,3 & 7 on ___ through ___", answer: "2 through 7" },
             { question: "Split 4’s against ___ & ___", answer: "5 & 6" },
             { question: "Split 6’s on ___ through ___", answer: "2 through 6" },
-            { question: "Split 9’s against ___ through ___, except ___", answer: "2 through 9, except 7" },
+            { question: "Split 9’s against ___ through ___, except ___", answer: "2 through 9 | except 7" },
             { question: "Soft 21 and 20 always ___", answer: "Stand" },
             { question: "Soft 19 (A,8) ___ against 6, otherwise it stands", answer: "Doubles" },
-            { question: "Soft 18 (A,7) ___ against 2-6, ___ against 7 and 8, ___ against 9, 10, Ace.", 
-                answer: "Doubles | Stands | Hits" },
+            { question: "Soft 18 (A,7) ___ against 2-6, ___ against 7 and 8, ___ against 9, 10, Ace.", answer: "Doubles | Stands | Hits" },
             { question: "Soft 17 (A,6) ___ against 3-6, otherwise it ___", answer: "Doubles | Hits" },
             { question: "Soft 16 and Soft 15 (A,5 and A,4) ___ against 4-6, otherwise it ___", answer: "Doubles | Hits" },
             { question: "Soft 14 and Soft 13 (A,3 and A,2) ___ against 5 and 6, otherwise it ___", answer: "Doubles | Hits" },
@@ -83,12 +82,14 @@
         function nextCard() {
             let randomIndex = Math.floor(Math.random() * flashcards.length);
             currentCard = flashcards[randomIndex];
-
             document.getElementById("flashcard").innerText = currentCard.question;
         }
 
         function showAnswer() {
-            document.getElementById("flashcard").innerText = currentCard.question + " → " + currentCard.answer;
+            const answers = currentCard.answer.split('|').map(ans => ans.trim());
+            let i = 0;
+            const filled = currentCard.question.replace(/___/g, () => answers[i++] || '');
+            document.getElementById("flashcard").innerText = filled;
         }
 
         nextCard();  // Load the first card on page load
