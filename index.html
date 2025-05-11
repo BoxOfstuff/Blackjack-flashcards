@@ -42,6 +42,11 @@
         }
         .btn-action { background-color: #007BFF; color: white; }
         .btn-action:hover { background-color: #0056b3; }
+
+        .answer {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -86,10 +91,10 @@
         }
 
         function showAnswer() {
-            const answers = currentCard.answer.split('|').map(ans => ans.trim());
+            const answers = currentCard.answer.split('|').map(ans => `<span class="answer">${ans.trim()}</span>`);
             let i = 0;
             const filled = currentCard.question.replace(/___/g, () => answers[i++] || '');
-            document.getElementById("flashcard").innerText = filled;
+            document.getElementById("flashcard").innerHTML = filled;
         }
 
         nextCard();  // Load the first card on page load
